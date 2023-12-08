@@ -63,4 +63,21 @@ const HeaderContainer = styled.header` //header에다 만든다.
     align-items: center;
     padding: 12px;
     gap: 24px;
+
+    .userWrap{
+        display: flex;
+        margin-left: auto; //오른쪽으로 밀어넣기
+        align-items: center;
+        gap: 12px;
+        button{
+            padding: 6px 12px;
+            border-radius: 6px;
+            &.loginBtn{
+                background: pink;
+            }
+            &.logoutBtn{
+                background: gray;
+            }
+        }
+    }
 `

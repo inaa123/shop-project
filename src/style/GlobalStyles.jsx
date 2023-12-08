@@ -56,6 +56,13 @@ const GlobalStyle = createGlobalStyle`
     width: 100%;
     }
     //reset파일 복붙
+
+    button{
+        border: none;
+        outline: none;
+        background: transparent;
+        cursor: pointer;
+    }
 `
 
 export default GlobalStyle;
