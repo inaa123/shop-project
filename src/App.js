@@ -1,24 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import Nav from './components/Nav';
+import { Outlet } from 'react-router-dom';
+import { AuthContextProvider } from './context/AuthContext';
+import GlobalStyle from './style/GlobalStyles';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    {/* 모든 영역을 감싸서 */}
+    <AuthContextProvider> 
+      <GlobalStyle/>
+      <Nav />
+      <Outlet />
+    </AuthContextProvider>
+      
+      {/* Outlet : 상위 경로에서 하위 경로 요소 구성해주는 역할을 한다. index.js에서 children으로 넣은 애들 연결해줄려면 Outlet으로 처리해줘야 한다. 그래야 하위 요소 제대로 연결할 수 있다. */}
+    </>
   );
 }
 
