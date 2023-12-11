@@ -1,7 +1,8 @@
 import Nav from './components/Nav';
-import { Outlet } from 'react-router-dom';
+import { Outlet, Route } from 'react-router-dom';
 import { AuthContextProvider } from './context/AuthContext';
 import GlobalStyle from './style/GlobalStyles';
+import AllProduct from './pages/AllProduct';
 
 function App() {
   return (
@@ -10,6 +11,8 @@ function App() {
     <AuthContextProvider> 
       <GlobalStyle/>
       <Nav />
+      {/* <Route path='/' element = {AllProduct}/> */}
+      <AllProduct />
       <Outlet />
     </AuthContextProvider>
       

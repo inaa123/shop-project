@@ -57,6 +57,10 @@ const GlobalStyle = createGlobalStyle`
     }
     //reset파일 복붙
 
+    body{
+        background: #f2e8bdae;
+    }
+
     button{
         border: none;
         outline: none;

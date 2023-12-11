@@ -26,7 +26,7 @@ function Nav() {
         })
     },[])
 
-    console.log(user)
+    // console.log(user)
     //관리자 지정 : 수동으로 만들어 줘야 한다.(데이터베이스 접근해서)
 
     return (

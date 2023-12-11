@@ -32,15 +32,16 @@ const routes = createBrowserRouter([
     errorElement : <NotFound/>,
 
     children : [ //하위요소들
+      
       {path : '/cart', element: <MyCart/>},
       {path : '/products/detail/:id', element : <ProductDetail/>},
       //상세페이지 : 고유의 아이디 값을 받아, 여기선 아이템 등록할 때마다 아이디를 생성해야 함. -> 그 아이디를 detail페이지에 뿌려야함, id는 고정값X 변동되는 값
       {
         path : '/product/upload', 
         element : 
-        // <ProtectRouter checkAdmin>
+        <ProtectRouter checkAdmin>
           <UploadProduct />
-        // </ProtectRouter>
+        </ProtectRouter>
       }, //product/upload경로로 이동하게 되면 <UploadProduct>가 나오도록
     ]
   }

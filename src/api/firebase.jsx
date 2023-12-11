@@ -97,6 +97,7 @@ async function adminUser(user){ //export하지 않고 userState할 때 adminUser
     }
 }
 
+//상품을 database에 업로드
 export async function addProducts(product, image){
     //product와 image 따로 받아야함. img경로 다름
     //각 아이템엔 고유의 식별자값이 들어가야함.(순번으로 들어가면 겹쳐서 오류날 확률이 높음 -> 그래서 yarn add uuid 를 설치한다.) 
@@ -110,5 +111,18 @@ export async function addProducts(product, image){
         id,
         image,
     })
+}
 
+// database에 있는 상품을 가져오기
+export async function getProducts(){ //매개변수 필요없음 등록해서 서버에 ㅇㅇ하는게 아님.
+    /*
+    async = 비동기 방식의 데이터 처리 방법이다.(자바스크립트에선 promise를 사용 -> 리액트에서 promise의 단점을 보완한 최신 비동기 처리방식 코드(async와 await)다.)
+    */
+    //작성할 땐 set, 가져올땐 get
+    const snapshot = await get(ref(database, 'products'));// products. 참조
+    if(snapshot.exists()){ //snapshot에 값이 있으면? snapshot의 값을 Object로 넘겨준다.
+        return Object.values(snapshot.val())
+    }else{ //없으면 빈배열을 return한다.
+        return []
+    }
 }
