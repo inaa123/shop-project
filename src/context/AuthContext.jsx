@@ -32,7 +32,7 @@ export function AuthContextProvider({children}){ //AuthContextProvider을 만든
         <AuthContext.Provider value={{user, googleLogin, googleLogOut}}>
             {children}
         </AuthContext.Provider>
-        //children은 하위 컴포넌트를 의미한다(ex index.js에서 children). 사이트 모든 페이지에서 사용자에 대한 관리 값을 전달해 주기 위해서다. 모든 페이지에서 유저가 인증을 받을 수 있도록 AuthContext란 관리자 전용 값을 만들어 놓은 것이다.(관리자만 관리자 페이지 접근할 수 있게, 관리자 아니면 팅겨냄)
+        // children은 하위 컴포넌트를 의미한다(ex index.js에서 children). 사이트 모든 페이지에서 사용자에 대한 관리 값을 전달해 주기 위해서다. 모든 페이지에서 유저가 인증을 받을 수 있도록 AuthContext란 관리자 전용 값을 만들어 놓은 것이다.(관리자만 관리자 페이지 접근할 수 있게, 관리자 아니면 팅겨냄)
     )
 }
 
