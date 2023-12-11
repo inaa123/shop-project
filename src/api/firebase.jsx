@@ -3,8 +3,8 @@
 
 import { initializeApp } from "firebase/app";
 import {GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup, signOut} from "firebase/auth";
-import {get, getDatabase, ref} from 'firebase/database';
-
+import {get, getDatabase, ref, set} from 'firebase/database';
+import { v4 as uuid} from 'uuid';
 
 const firebaseConfig = { //이름 바꾸면 안됨(키 값도 오타 주의(틀리면 다른 키로 인식))
     apiKey : process.env.REACT_APP_FIREBASE_API_KEY,
@@ -95,4 +95,20 @@ async function adminUser(user){ //export하지 않고 userState할 때 adminUser
     }catch(error){
         console.error(error)
     }
+}
+
+export async function addProducts(product, image){
+    //product와 image 따로 받아야함. img경로 다름
+    //각 아이템엔 고유의 식별자값이 들어가야함.(순번으로 들어가면 겹쳐서 오류날 확률이 높음 -> 그래서 yarn add uuid 를 설치한다.) 
+    // uuid : 식별자를 만들어주는 라이브러리다. 숫자와 영문으로 조합된 식별자 코드를 부여해서 고유값으로 사용하는 라이브러리다.
+
+    const id = uuid();
+
+    //set : 세팅. database안에서
+    return set(ref(database, `products/${id}`),{
+        ...product,
+        id,
+        image,
+    })
+
 }
