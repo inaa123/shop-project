@@ -9,11 +9,11 @@ import App from './App';
 import NotFound from './pages/NotFount';
 import MyCart from './pages/MyCart';
 import ProductDetail from './pages/ProductDetail';
+import UploadProduct from './pages/UploadProduct';
 import { useAuthContext } from './context/AuthContext';
 
 //css
 import './index.css';
-import UploadProduct from './pages/UploadProduct';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -50,10 +50,8 @@ const routes = createBrowserRouter([
 root.render(
   <React.StrictMode>
     {/* <App /> -> 이 아니라 Link로 뿌려진애들 넣어줘야함. */}
-    {/* Provider눈 link정보들을 하위요소로 뿌릴려고(index나App에서 작성 후 하위요소에 뿌려야함.) */}
-    <RouterProvider router={routes}>
-
-    </RouterProvider>
+    {/* Provider는 최상위 요소에 link정보들을 하위요소로 뿌릴려고(index나App(최상위 요소)에서 작성 후 하위요소에 뿌려야함.) */}
+    <RouterProvider router={routes}/>
   </React.StrictMode>
 );
 

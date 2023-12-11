@@ -1,4 +1,4 @@
-//설치: npm install firebase / yarn add firebase? -> package.json에서 firebase 10버전인지 확인
+//설치: npm install firebase / yarn add firebase -> package.json에서 firebase 10버전인지 확인
 //firebase기능 사용할 수 있다.(설치완료 후)
 
 import { initializeApp } from "firebase/app";
@@ -6,11 +6,11 @@ import {GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup, signOu
 import {get, getDatabase, ref, set} from 'firebase/database';
 import { v4 as uuid} from 'uuid';
 
-const firebaseConfig = { //이름 바꾸면 안됨(키 값도 오타 주의(틀리면 다른 키로 인식))
+const firebaseConfig = { //apiKey, authDomain 같은 이름 바꾸면 안됨(키 값임! 오타 주의(틀리면 다른 키로 인식))
     apiKey : process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain : process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
     projectId : process.env.REACT_APP_FIREBASE_PROJECT_ID,
-    databaseURL : process.env.REACT_APP_FIREBASE_DB_URL
+    databaseURL : process.env.REACT_APP_FIREBASE_DB_URL,
 }
     /*
     process.env는 환경 변수다. node.js의 전역객체다.
@@ -20,23 +20,23 @@ const firebaseConfig = { //이름 바꾸면 안됨(키 값도 오타 주의(틀�
     .env = process에서 사용할 수 있는 모든 환경변수를 포함하는 객체다. 뒤의 값은 만들어 둔 키값(변수값)임.
     */
 
-    const app = initializeApp(firebaseConfig); //firebase접근할 때마다 자동로그인처럼 기본 세팅값을 
-    const provider = new GoogleAuthProvider();
-    const auth = getAuth();
-    const database = getDatabase(app); //데이터베이스에서 정보를 가져오는 거기 때문에 config......???????
+const app = initializeApp(firebaseConfig); //firebase접근할 때마다 자동로그인처럼 기본 세팅값을 
+const provider = new GoogleAuthProvider();
+const auth = getAuth(); //사용자 정보 가져오겠다.(인증자 인증)
+const database = getDatabase(app); //데이터베이스에서 정보를 가져오는 거기 때문에 config......???????
 
 //구글 자동 로그인 방지
 provider.setCustomParameters({
-    prompt : 'select_account' //구글 로그인창 이름?이 select_accout??
+    prompt : 'select_account' // select_account란 이름의 prompt창 띄우겠다. 구글 로그인창 이름?이 select_accout다. -> provider가 들어올때마다 계속 인증받을 수 있게 하겠다.
 })
 
 //구글 로그인 function
 export async function googleLogin(){
     //try 시도
     try{ //구글로그인 시도하면 구글로그인팝업창 띄우기
-        const result = await signInWithPopup(auth, provider); //auth와 provider의
+        const result = await signInWithPopup(auth, provider); //auth와 provider의 정보를 가져온다.
         const user = result.user; //로그인한 유저 정보 받아옴
-        //console.log(user)
+        // console.log(user)
         return user;
     }
     catch(error){
@@ -46,14 +46,14 @@ export async function googleLogin(){
 
 export async function googleLogOut() {
     try{
-        await signOut(auth); //기존의 정보들을 초기화하는 hook이다.
+        await signOut(auth); //auth의 정보들 비워준다. signOut : 기존의 정보들을 초기화하는 hook이다.
     } catch(error){
         console.error(error);
     }
 }
 
 //로그인시 새로고침해도 로그인을 계속 유지
-export function onUserState(callback){
+export function onUserState(callback){ //콜백값 넘겨줌
     onAuthStateChanged(auth, async(user)=> {
         if(user){
             try{

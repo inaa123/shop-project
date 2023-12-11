@@ -7,15 +7,15 @@ import { FaPen } from "react-icons/fa";
 
 
 function Nav() {
-    const [user, setUser] = useState(); 
-    //유저는 계속 바뀜
+    const [user, setUser] = useState(); //유저는 계속 바뀜(user, setUser를 usestate값으로 관리)
 
     const login = () => {
-        googleLogin().then(setUser); //여기서 googleLogin이 api/firebase에 있는 googleLogin, setUser를
+        googleLogin().then(setUser); //여기서 googleLogin은 api/firebase에 있는 googleLogin, setUser의 값을 새로 담는다.
+        
     }
 
     const logout = () => {
-        //googleLogout을 불러와서 then setUser의 값을 넣어준다. -> 
+        //googleLogout을 불러와서 then, setUser의 값을 넣어준다. 
         googleLogOut().then(setUser);
     }
 
@@ -25,8 +25,7 @@ function Nav() {
             setUser(user);
         })
     },[])
-
-    // console.log(user)
+    console.log(user); //isAdmin = true
     //관리자 지정 : 수동으로 만들어 줘야 한다.(데이터베이스 접근해서)
 
     return (
