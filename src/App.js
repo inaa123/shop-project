@@ -7,7 +7,7 @@ import AllProduct from './pages/AllProduct';
 function App() {
   return (
     <>
-    {/* 모든 영역을 감싸서 */}
+    {/* 모든 경로에서 AuthContextProvider가 인증받을 수 있도록 전체를 감싸준다.*/}
     <AuthContextProvider> 
       <GlobalStyle/>
       <Nav />
