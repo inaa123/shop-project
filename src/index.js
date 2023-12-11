@@ -18,12 +18,15 @@ import './index.css';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 //관리자 인증(조건에 하나라도 만족하지 못하면 페이지를 이동할 수 없게 하고, 강제로 홈으로 이동시킨다.(경고창 띄우지않음))
-const ProtectRouter = ({checkAdmin, children}) => { //checkAdmin과 children을 체크한다.
-  const {user} = useAuthContext(); //useAuthContex를 불러온다.
-  if(!user || (checkAdmin && !user.isAdmin)){ //user가 아니거나 (체크어드민이고 user.isAdmin이 아닌경우 = )관리자가 아닌 경우 강제로 홈으로 이동
-    return <Navigate to='/' replace />
-  }
+const ProtectRouter = ({checkAdmin, children}) => {
+  const {user} = useAuthContext();
 }
+// const ProtectRouter = ({checkAdmin, children}) => { //checkAdmin과 children을 체크한다.
+//   const {user} = useAuthContext(); //{user}유저에 대한 정보를 받아서 useAuthContex를 불러온다.
+//   if(!user || (checkAdmin && !user.isAdmin)){ //user가 아니거나 (체크어드민이고 user.isAdmin이 아닌경우 = )관리자가 아닌 경우 강제로 홈으로 이동
+//     return <Navigate to='/' replace />
+//   }
+// }
 
 const routes = createBrowserRouter([
   {
@@ -39,10 +42,8 @@ const routes = createBrowserRouter([
       {
         path : '/product/upload', 
         element : 
-        <ProtectRouter checkAdmin>
           <UploadProduct />
-        </ProtectRouter>
-      }, //product/upload경로로 이동하게 되면 <UploadProduct>가 나오도록
+      }, // product/upload경로로 이동하게 되면 <UploadProduct>가 나오도록
     ]
   }
 ])

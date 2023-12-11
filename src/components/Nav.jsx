@@ -34,8 +34,9 @@ function Nav() {
 
             {/*로그인버튼 -> 로그인 할 수 있도록, login버튼 누르면 로그인 실행되게(구글 로그인 창 불러오기)*/}
             <div className='userWrap'>
+                {/* <Link to='/product/upload'></Link> */}
                 {user && user.isAdmin && 
-                    (<Link to='/product/upload' className='uploadLink'><FaPen /></Link>)
+                    <Link to='/product/upload' className='uploadLink'><FaPen /></Link>
                 }
                 {user ? ( //user가 있으면
                     <>
@@ -48,7 +49,7 @@ function Nav() {
                 )}
             </div>
              {/*조건문에서 ()넣는이유는 보통 true와 false에 따라 값을 넣기 위함. 여기선 false값은 생각 안하기 때문에 안넣어도 된다. */} 
-             {/*관리자가 아니면 업로드 버튼이 뜨지 않지만 경로를 알고 있으면 관리자가 아닌 유저도 관리자 페이지에 들어갈 수 있음 ->강제로 경로 이동하려 하면? index에서 지정해준다. */}
+             {/*관리자가 아니면 업로드 버튼이 뜨지 않지만 경로를 알고 있으면 관리자가 아닌 유저도 관리자 페이지에 들어갈 수 있음 ->강제로 경로 이동하려 하면 index에서 지정해준다. */}
         </HeaderContainer>
     )
 }

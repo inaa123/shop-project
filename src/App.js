@@ -16,7 +16,7 @@ function App() {
       <Outlet />
     </AuthContextProvider>
       
-      {/* Outlet : 상위 경로에서 하위 경로 요소 구성해주는 역할을 한다. index.js에서 children으로 넣은 애들 연결해줄려면 Outlet으로 처리해줘야 한다. 그래야 하위 요소 제대로 연결할 수 있다. */}
+      {/* Outlet : 상위 경로에서 하위 경로 요소 구성해주는 역할을 한다. index.js에서 children(하위요소)으로 넣은 애들 연결해줄려면 Outlet으로 처리해줘야 한다. 그래야 하위 요소 제대로 연결할 수 있다. */}
     </>
   );
 }
