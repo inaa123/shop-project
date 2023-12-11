@@ -23,7 +23,7 @@ const firebaseConfig = { //apiKey, authDomain 같은 이름 바꾸면 안됨(키
 const app = initializeApp(firebaseConfig); //firebase접근할 때마다 자동로그인처럼 기본 세팅값을 
 const provider = new GoogleAuthProvider();
 const auth = getAuth(); //사용자 정보 가져오겠다.(인증자 인증)
-const database = getDatabase(app); //데이터베이스에서 정보를 가져오는 거기 때문에 config......???????
+const database = getDatabase(app); //데이터베이스에서 정보를 가져오는 거기 때문에 getDatabase에 config주소(initializeApp(firebaseConfig)를 입력해 줘야 한다.
 
 //구글 자동 로그인 방지
 provider.setCustomParameters({
@@ -59,7 +59,7 @@ export function onUserState(callback){ //콜백값 넘겨줌
             try{
                 // callback(user)
                 //user값만 보낼게 아니라 adminUser로 검색?하기 위해 try에 추가해준다.
-                const updateUser = await adminUser(user)//adminUser를 한번 실행 한 후 callback에 updateUser를 출력해준다.
+                const updateUser = await adminUser(user)//adminUser를 한번 실행 한 후 (어드민인지 본다.아니면user만 맞으면 isAdmin추가되서), callback에 updateUser를 출력해준다.
                 callback(updateUser) //console.log에 isAdmin이 뜬다.
                 
             }catch(error){
@@ -76,26 +76,27 @@ export function onUserState(callback){ //콜백값 넘겨줌
 
 
 
-//로그인할때마다 admin인지 계속 검사해줘야한다 -> export할건아님. 밖으로 내보낼거 아님. 참조만 할 것
-async function adminUser(user){ //export하지 않고 userState할 때 adminUser를 사용한다. 
+//로그인할때마다 admin인지 계속 검사해줘야한다 -> export할 필요 없음 import할 요소x. 밖으로 내보낼거 아니라, 로그인할때나 onUserState 시 참조만 하도록 할 것
+//onUserState할 때 사용 -> onUserState에 추가
+async function adminUser(user){ //user의 값을 받아온다. -> user의 값 어디서 받아옴??
     try{
-        //데이터베이스에 있는 정보 가져와서 로그인된 정보와 맞춰보기 -> (새로만드는거면set, 여기선 set아님)
-        const snapshot = await get(ref(database, 'admin'))
-        //snapshot = firebase안에 database안에 admin폴더를 검색한다.
+        //데이터베이스에 있는 정보 가져와서 로그인된 정보와 맞춰보기 -> (새로 만드는거면set, 여기선 set아님)
+        const snapshot = await get(ref(database, 'admin')) //snapshot = firebase안에 database안에 admin폴더를 검색한다.
+        //(snapshot : get으로 가져올 때 데이터베이스 안에 뭐가 있는지 체크한다는 의미를 가진다.)
         
         if(snapshot.exists()){//가져온 admin이란 데이터베이스 안에 데이터가 있으면! exists()가 데이터를 의미 -> 있으면 true
             //snapshot.exists() : snapshot안에 데이터가 있음을 의미한다.
-            const admins = snapshot.val(); //admin폴더 안에 있는 데이터들을 검색 (admin이 여러 명일 수 있으니)
+            const admins = snapshot.val(); // admin폴더 안에 있는 데이터들을 검색한다. (admin이 여러 명일 수 있으니 값들 먼저 다 받아 와서 admins에 담아둔다, snapshot의 value 값(데이터 목록)들 검색할 것)
             const isAdmin = admins.includes(user.email);
             //검색된 admins에 현재 로그인된 사용자의 이메일(user.email)과 일치하는 이메일이 있는지 확인한다.
 
-            return {...user, isAdmin} //어드민계정인지 user email과 유저 정보에 isAdmin을 붙여서 전달된다.
+            return {...user, isAdmin} //어드민계정인지 user email과 유저 정보에 isAdmin을 붙여서 전달된다. (...user에 isAdmin을 추가하여 재반환해준다.)
         }
         return user //admin이 아니면 user만 보내면 된다.
     }catch(error){
         console.error(error)
     }
-}
+} 
 
 //상품을 database에 업로드
 export async function addProducts(product, image){
