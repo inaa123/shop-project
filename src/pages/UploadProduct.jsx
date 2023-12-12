@@ -12,12 +12,17 @@ function UploadProduct() {
     const [error, setError] = useState(null);
     const fileRef = useRef(); //업로드한 파일명 초기화하려고(돔에 직접접근위해 useRef)
 
+    const colors = [
+        '#c3cfe2', '#d299c2', '#fef9d7', '#fddb92', '#deecdd', '#accbee', '#8989ba', '#453a94', '#f43b47'
+    ]
+
     const [product, setProduct] = useState({
         title : '',
         price : '',
         option : '',
         category : '',
         description : '',
+        colors : [],
     }) //모든 상품의 상태를 빈 문자열로 초기화할 때 사용한다. (상품 업로드되면 썼던 정보들 없애기 위해 기본 상태값 지정함)
     
     const productInfoChange = (e) => {
@@ -27,6 +32,17 @@ function UploadProduct() {
         }else{ //아니면 setProduct에 
             setProduct((prev) => ({...prev, [name]:value}))
         }
+    }
+
+    const colorPicker = (color) => {
+        //컬러를 선택했으면 setProduct안에
+        setProduct((prev)=>({...prev, colors: prev.colors.includes(color) ? 
+            prev.colors : [...prev.colors, color]}))
+    }
+
+    const removeColor = (colorRemove) => {
+        //setProduct에 내가 선택한 컬러 값을 리스트에서 filter로 걸러내야 한다.
+        setProduct((prev)=>({...prev, colors : prev.colors.filter(color => color !== colorRemove)}))
     }
 
     //외부와 통신할때 async를ㄹ 써야한다.(지금 imgupload.jsx의 것 가져와야 하니)
@@ -48,6 +64,7 @@ function UploadProduct() {
                 option : '',
                 category : '',
                 description : '',
+                colors : []
             });
             //업로드가 다 되고 나면 setFile과 setProduct비워준다. -> 파일선택 옆에 업로드한 파일명 남아있음(이유 : useState는 상태값에만 접근할 수 있고, dom요소엔 접근할 수 없기 때문이다. -> useRef로 하면 없앨 수 있음. const fileRef를 추가해준다.)
             //state값은 dom에 출력되지않는 기본값들(value 등)로만 활용한다. dom에 작성된 값들은 state null로 지울 수 없다 -> useRef로 돔에 직접 접근해야 한다.
@@ -102,13 +119,21 @@ function UploadProduct() {
                     />
                     {/* 상품 가격 */}
 
-                    <input
+                    {/* <input
                         type='text'
                         name='category'
                         placeholder='상품 분류'
                         value={product.category}
                         onChange={productInfoChange}
-                    />
+                    /> */}
+                    <select name='category' value={product.category} onChange={productInfoChange}>
+                        <option value=''>분류 선택</option>
+                        <option value='top'>상의</option>
+                        <option value='bottom'>하의</option>
+                        <option value='outer'>아우터</option>
+                        <option value='accessory'>악세사리</option>
+                        <option value='etc'>기타</option>
+                    </select>
                     {/* 상품 분류 */}
 
                     <input
@@ -119,6 +144,27 @@ function UploadProduct() {
                         onChange={productInfoChange}
                     />
                     {/* 상품 옵션 */}
+                    <ColorChip>
+                        {colors.map((color, index) => (
+                            <div className='colorChipItem' 
+                                key={index}
+                                style={{backgroundColor : color}}
+                                onClick={()=>colorPicker(color)}
+                                //() => 매개변수 들어갈 때
+                            >    
+                            </div>
+                        ))}
+                    </ColorChip>
+
+                    <ColorSelect>
+                        {product.colors.map((color, index) => (
+                            <div key={index}
+                                style={{backgroundColor : color}}>
+                                    {color}
+                                    <button onClick={()=>removeColor(color)}>X</button>
+                            </div>
+                        ))}
+                    </ColorSelect>
 
                     <input
                         type='text'
@@ -187,5 +233,31 @@ const FormContainer = styled.div`
                 background: rgba(194, 177, 109, 1);
             }
         }
+    }
+`
+const ColorChip = styled.div`
+    display:flex;
+    gap: 4px;
+    flex-wrap : wrap;
+    margin-bottom: 10px;
+    .colorChipItem{
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        /* background-color: color; color값을 받아와야 하기 때문에 html태그?에 직접 입력한다. */
+    }
+`
+
+const ColorSelect = styled.div`
+    display : flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    div{
+        width: 100px;
+        height: 30px;
+        color: #ffffff;
+        display:flex;
+        align-items: center;
+        justify-content: center;
     }
 `
