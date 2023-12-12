@@ -35,7 +35,7 @@ function DetailPageEvent({product}) { //Products에서 받아온 product
         })
         
     }
-   console.log(product)
+   //console.log(product)
     return (
         <DetailItem onClick={detailNavigate}>
             
