@@ -58,7 +58,7 @@ const GlobalStyle = createGlobalStyle`
     //reset파일 복붙
 
     body{
-        background: #f2e8bdae;
+        background: #f9f8f7f9;
     }
 
     button{
@@ -66,6 +66,11 @@ const GlobalStyle = createGlobalStyle`
         outline: none;
         background: transparent;
         cursor: pointer;
+    }
+    .container{
+        max-width : 1200px;
+        margin: 0px auto;
+        padding : 100px 0px;
     }
 `
 
