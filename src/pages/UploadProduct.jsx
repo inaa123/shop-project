@@ -1,8 +1,9 @@
 //새 제품 올리는 페이지
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { upLoadImg } from '../api/imgupload';
 import { addProducts } from '../api/firebase';
 import styled from 'styled-components';
+import { CategoryContext } from '../context/CategoryContext';
 
 function UploadProduct() {
     const [file, setFile] = useState(null);
@@ -11,9 +12,10 @@ function UploadProduct() {
     const [success, setSuccess] = useState(null);
     const [error, setError] = useState(null);
     const fileRef = useRef(); //업로드한 파일명 초기화하려고(돔에 직접접근위해 useRef)
+    const {categoryList} = useContext(CategoryContext); //{categoryList는 useContext안 CategoryContext}
 
     const colors = [
-        '#c3cfe2', '#d299c2', '#fef9d7', '#fddb92', '#deecdd', '#accbee', '#8989ba', '#453a94', '#f43b47'
+        '#c3cfe2', '#d299c2', '#fef9d7', '#fddb92', '#0ba360', '#accbee', '#8989ba', '#453a94', '#f43b47'
     ]
 
     const [product, setProduct] = useState({
@@ -126,13 +128,19 @@ function UploadProduct() {
                         value={product.category}
                         onChange={productInfoChange}
                     /> */}
-                    <select name='category' value={product.category} onChange={productInfoChange}>
+                    {/* <select name='category' value={product.category} onChange={productInfoChange}>
                         <option value=''>분류 선택</option>
                         <option value='top'>상의</option>
                         <option value='bottom'>하의</option>
                         <option value='outer'>아우터</option>
                         <option value='accessory'>악세사리</option>
                         <option value='etc'>기타</option>
+                    </select> 수동x */}
+                    <select name='category' value={product.category} onChange={productInfoChange}>
+                        <option value=''>분류선택</option>
+                        {categoryList.map((el, index)=>(
+                            <option key={index} value={el}>{el}</option>
+                        ))}
                     </select>
                     {/* 상품 분류 */}
 
@@ -165,7 +173,6 @@ function UploadProduct() {
                             </div>
                         ))}
                     </ColorSelect>
-
                     <input
                         type='text'
                         name='description'
