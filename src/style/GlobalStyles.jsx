@@ -72,6 +72,12 @@ const GlobalStyle = createGlobalStyle`
         margin: 0px auto;
         padding : 100px 0px;
     }
+    .itemTitle{
+        font-size: 24px;
+        /* text-align: center; */
+        margin-bottom: 36px;
+        font-weight: normal;
+    }
 `
 
 export default GlobalStyle;

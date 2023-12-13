@@ -3,7 +3,7 @@
 
 import { initializeApp } from "firebase/app";
 import {GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup, signOut} from "firebase/auth";
-import {get, getDatabase, ref, set} from 'firebase/database';
+import {get, getDatabase, ref, remove, set} from 'firebase/database';
 import { v4 as uuid} from 'uuid';
 
 const firebaseConfig = { //apiKey, authDomain 같은 이름 바꾸면 안됨(키 값임! 오타 주의(틀리면 다른 키로 인식))
@@ -126,4 +126,37 @@ export async function getProducts(){ //매개변수 필요없음 등록해서 �
     }else{ //없으면 빈배열을 return한다.
         return []
     }
+}
+
+//장바구니 리스트 (업데이트(기존 요소가 달라졌을 시), 상품정보 가져오기, 상품 삭제)
+//장바구니 리스트 불러오기(상품 가져오기) : userId를 가져
+export async function getCart(userId){
+try{
+    const snapshot = await get(ref(database, `cart/${userId}`));
+    if(snapshot.exists()){
+        const item = snapshot.val();
+        return Object.values(item);
+    }else{
+        return []
+    }
+}catch(error){
+    console.error(error);
+}
+}
+
+//장바구니 업데이트
+export async function updateCart(userId, product){ //userId와 product 리스트도 받아온다.
+try{
+    //카트 : 사용자마다 사용자의id가 있어 userid마다 cart(리스트)를 따로 만들어서 관리. 
+    //product.id
+    const cartRef = ref(database, `cart/${userId}/${product.id}`);
+    await set(cartRef, product);
+}catch(error){
+    console.error(error);
+}
+}
+
+//장바구니 목록 삭제
+export async function deleteCart(userId, productId){ //userId와 productId받아옴
+    return remove(ref(database, `cart/${userId}/${productId}`))
 }
