@@ -160,3 +160,20 @@ try{
 export async function deleteCart(userId, productId){ //userId와 productId받아옴
     return remove(ref(database, `cart/${userId}/${productId}`))
 }
+
+//카테고리 상품 가져오기
+export async function getCategoryProduct(category){ 
+    //get : 가져오기, database안에 있는 products폴더를 가져온다.
+    console.log(category)
+    return get(ref(database, 'products')).then((snapshot) =>{
+        if(snapshot.exists()){
+            //카테고리 별로 아이템 나누는 방식은 
+            //전체 상품을 먼저 구한 뒤에 필터로 카테고리별로 구분하면된다.
+            const allProducts = Object.values(snapshot.val()); //전체 상품, Object의 value들을 snapshot의 val에 담아서 리스트 출력
+            const filterProducts = allProducts.filter((product)=>product.category === category); //product의 category와 내가 선택한 category가 같으면
+
+            return filterProducts
+        }
+        return []; //상품이 없으면 빈 배열 출력
+    })
+}
