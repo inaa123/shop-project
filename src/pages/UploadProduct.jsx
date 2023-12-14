@@ -234,10 +234,10 @@ const FormContainer = styled.div`
             margin-top: auto;
             height: 50px;
             border-radius: 4px;
-            background: rgba(194, 177, 109, 0.5);
+            background: #c17c74a3;
             border: none;
             &:hover{
-                background: rgba(194, 177, 109, 1);
+                background: #c17c74;
             }
         }
     }

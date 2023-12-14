@@ -58,7 +58,7 @@ const GlobalStyle = createGlobalStyle`
     //reset파일 복붙
 
     body{
-        background: #f9f8f7f9;
+        background: #f5ebe0;
     }
 
     button{

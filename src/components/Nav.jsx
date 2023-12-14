@@ -75,10 +75,10 @@ const HeaderContainer = styled.header` //header에다 만든다.
             padding: 6px 12px;
             border-radius: 6px;
             &.loginBtn{
-                background: pink;
+                background: #c69f9a;
             }
             &.logoutBtn{
-                background: gray;
+                background: #c17c74;
             }
         }
         .uploadLink{
