@@ -36,6 +36,7 @@ function Nav() {
 
             {/*로그인버튼 -> 로그인 할 수 있도록, login버튼 누르면 로그인 실행되게(구글 로그인 창 불러오기)*/}
             <div className='userWrap'>
+                <Link to='/search'>검색</Link>
                 {/* <Link to='/product/upload'></Link> */}
                 {user && user.isAdmin && 
                     <Link to='/product/upload' className='uploadLink'><FaPen /></Link>

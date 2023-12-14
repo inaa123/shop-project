@@ -177,3 +177,30 @@ export async function getCategoryProduct(category){
         return []; //상품이 없으면 빈 배열 출력
     })
 }
+
+//상품 검색
+export async function searchProducts(query){ //검색어(query)를 받아온다.
+    try{
+        const dbRef = ref(database, 'products');
+        const snapshot = await get(dbRef);
+        if(snapshot.exists()){
+            const data = snapshot.val();
+            //모든 리스트 출력후 필터로 걸러줘야 함
+            const allProducts = Object.values(data);
+
+            if(allProducts.length === 0){
+                return []
+            }
+            const matchProduct = allProducts.filter((product)=>{
+                //작성자명, 내용 등 으로 찾을 지 따라 filter해주면 된다. 상품이름으로 
+                const itemTitle = product.title;
+                return itemTitle.includes(query)
+            })
+            return matchProduct;
+        }else{
+            return []
+        }
+    }catch(error){
+        console.error(error);
+    }
+}

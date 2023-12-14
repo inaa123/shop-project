@@ -15,6 +15,7 @@ import CategoryPages from './pages/CategoryPages';
 
 //css
 import './index.css';
+import Search from './pages/Search';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -39,6 +40,7 @@ const routes = createBrowserRouter([
       {path : '/products/detail/:id', element : <ProductDetail/>},
       //상세페이지 : 고유의 아이디 값을 받아, 여기선 아이템 등록할 때마다 아이디를 생성해야 함. -> 그 아이디를 detail페이지에 뿌려야함, id는 고정값X 변동되는 값
       {path : 'products/:category', element : <CategoryPages/>},
+      {path : '/search', element : <Search/>},
       {
         path : '/product/upload', 
         element :
