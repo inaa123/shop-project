@@ -7,7 +7,6 @@ import { useAuthContext } from './context/AuthContext';
 
 //컴포넌트
 import App from './App';
-import NotFound from './pages/NotFount';
 import MyCart from './pages/MyCart';
 import ProductDetail from './pages/ProductDetail';
 import UploadProduct from './pages/UploadProduct';
@@ -17,9 +16,9 @@ import CategoryPages from './pages/CategoryPages';
 import './index.css';
 import Search from './pages/Search';
 import WriteBoard from './pages/WriteBoard';
-import { element } from 'prop-types';
 import Qna from './pages/Qna';
 import DetailBoard from './pages/DetailBoard';
+import NotFound from './pages/NotFound';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
