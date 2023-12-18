@@ -33,6 +33,7 @@ function Nav() {
         <HeaderContainer>
             <h1><Link to='/'>shop </Link> {/*Link로 로고만들*/}</h1>
             <MainMenu/>
+            <Link to='/board/qna'>QnA</Link>
 
             {/*로그인버튼 -> 로그인 할 수 있도록, login버튼 누르면 로그인 실행되게(구글 로그인 창 불러오기)*/}
             <div className='userWrap'>

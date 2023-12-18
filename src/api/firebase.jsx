@@ -204,3 +204,30 @@ export async function searchProducts(query){ //검색어(query)를 받아온다.
         console.error(error);
     }
 }
+
+//데이터베이스에 게시글 업로드(저장)
+export async function addBoard(user, date, title, text){
+    //글 마다 id부여
+    const id = uuid();
+    const postData = { //저장(id, 제목, 본문, 날짜, 작성자 등)
+        id, //글 id
+        //id는 게시글 만들어질 때마다 만들어지고, 나머지는 외부에서 받아와야 함.
+        user,
+        date,
+        title,
+        text
+    }
+    //받아온 정보들 database에 저장해야 한다. ref database에 /board/${id} 폴더에 postData의 값 들어가야 함
+    return set(ref(database, `/board/${id}`), postData)
+}
+
+//등록된 게시글 가져오기
+export async function getBoard(){
+    return get(ref(database, 'board')) 
+    .then((snapshot)=> {
+        if(snapshot.exists()){
+            return Object.values(snapshot.val());
+        }
+        return []
+    })
+}
