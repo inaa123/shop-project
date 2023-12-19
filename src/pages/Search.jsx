@@ -34,7 +34,7 @@ function Search() {
     return (
         <div className='container'>
             <SearchForm>
-            <input type='text' value={query} onChange={onSearchEvent} className='searchForm'/>
+            <input type='text' value={query} onChange={onSearchEvent} className='searchForm' placeholder='상품명을 입력하세요.'/>
             <ul className='productList'>
                 {result.map((product)=>(
                     <li>
@@ -59,6 +59,6 @@ const SearchForm = styled.div`
         height: 30px;
         border-radius: 10px;
         border: solid 2px;
-        border-color: #ffecd2
+        border-color: #c17c74;
     }
 `

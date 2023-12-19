@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import DetailPageEvent from './DetailPageEvent';
 import SortButton from './SortButton';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 //아이템 따로따로 나오는 컴포넌트(카테고리별 상품 리스트)
 function CategoryProductList({category, product}) { //CategoryPages에서 보낸 category( 카테고리명)와 product 받아 옴. 전달됨
@@ -38,7 +39,7 @@ function CategoryProductList({category, product}) { //CategoryPages에서 보낸
     console.log(sortProducts)
 
     return (
-        <div className='container'>
+        <CategoryProductContainer className='container'>
             <h2>{category}</h2>
             <SortButton sortName={sortName} sortPrice={sortPrice}/>
             <ul className='productList'>
@@ -48,7 +49,7 @@ function CategoryProductList({category, product}) { //CategoryPages에서 보낸
                     </li>
                 ))}
             </ul>
-        </div>
+        </CategoryProductContainer>
     )
 }
 
@@ -59,3 +60,13 @@ CategoryProductList.propTypes={
 }
 
 export default CategoryProductList
+
+const CategoryProductContainer = styled.div`
+    .productList{
+        /* li{
+            padding: 12px;
+            background: white;
+            border-radius: 10px;
+        } */
+    }
+`
