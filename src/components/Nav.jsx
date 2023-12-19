@@ -9,6 +9,7 @@ import MainMenu from './MainMenu';
 
 function Nav() {
     const [user, setUser] = useState(); //유저는 계속 바뀜(user, setUser를 usestate값으로 관리)
+    const [menuName, setMenuName] = useState('');
 
     const login = () => {
         googleLogin().then(setUser); //여기서 googleLogin은 api/firebase에 있는 googleLogin, setUser의 값을 새로 담는다.
@@ -29,18 +30,22 @@ function Nav() {
     console.log(user); //isAdmin = true
     //관리자 지정 : 수동으로 만들어 줘야 한다.(데이터베이스 접근해서)
 
+    // const selectMenu = (e) => {
+    //     return setMenuName(e.target.value)
+    // }
+
     return (
         <HeaderContainer>
             <h1><Link to='/'>shop </Link> {/*Link로 로고만들*/}</h1>
             <MainMenu/>
-            <Link to='/board/qna'>QnA</Link>
+            <Link to='/board/qna' value='qna' className={menuName === 'qna' ? 'active' : ''} onClick={()=>setMenuName('qna')}>QnA</Link>
 
             {/*로그인버튼 -> 로그인 할 수 있도록, login버튼 누르면 로그인 실행되게(구글 로그인 창 불러오기)*/}
             <div className='userWrap'>
-                <Link to='/search'>검색</Link>
+                <Link to='/search' value='search' className={menuName === 'search' ? 'active' : ''} onClick={()=>setMenuName('search')}>검색</Link>
                 {/* <Link to='/product/upload'></Link> */}
                 {user && user.isAdmin && 
-                    <Link to='/product/upload' className='uploadLink'><FaPen /></Link>
+                    <Link to='/product/upload' className='uploadLink' value='upload' ><FaPen /></Link>
                 }
                 {user ? ( //user가 있으면
                     <>
@@ -84,6 +89,13 @@ const HeaderContainer = styled.header` //header에다 만든다.
         }
         .uploadLink{
             color: black;
+        }
+    }
+
+    a{
+        color: black;
+        &.active{
+            color : #c17c74;
         }
     }
 `
