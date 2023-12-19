@@ -6,13 +6,21 @@ function BoardListItem({post}) {
 
     const navigate = useNavigate();
     const onDetailEvent = () => {
-        navigate(`/board/qna/${post.id}`)
+        navigate(`/board/qna/${post.id}`, {
+            state : {
+                id : post.id,
+                user : post.user,
+                date : post.date,
+                title : post.title,
+                text : post.text
+            }
+        })
     }
 
     return (
         <BoardItem onClick={onDetailEvent}>
             <p>{post.title}</p>
-            <p>{post.date}</p>
+            {/* <p>{post.date}</p> */}
         </BoardItem>
     )
 }

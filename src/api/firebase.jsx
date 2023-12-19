@@ -231,3 +231,64 @@ export async function getBoard(){
         return []
     })
 }
+
+//게시글에 댓글 저장
+export async function addComments(boardId, user, text) {
+    const id = uuid();
+    return set(ref(database, `/board/${boardId}/comments/${id}`), {
+        id,
+        user,
+        text
+    })
+}
+
+//게시글 댓글 불러오기
+export async function getComments(boardId, user, text){
+    return get(ref(database, `/board/${boardId}/comments`))
+    .then((snapshot)=>{
+        if(snapshot.exists()){
+            return Object.values(snapshot.val());
+        }
+        return []
+    })
+}
+
+//리뷰 글 저장 
+export async function addReview(productId, user, text){ //경로 잡을 때 필요한 것 : 고유의id(리뷰id), 제품id
+    const reviewId = uuid();
+    const reviewRef = ref(database, `review/${productId}/${reviewId}`);
+
+    try{
+        await set(reviewRef, {
+            id : reviewId,
+            user : user,
+            text : text
+        })
+        return reviewId;
+    }catch(error){
+        console.error(error);
+    }
+}
+
+//리뷰 글 불러오기
+export async function getReviews(productId){
+    const reviewRef = get(ref(database, `/review/${productId}`));
+
+    try{
+        const snapshot = await get(reviewRef);
+        if(snapshot.exists()){
+            return Object.values(snapshot.val());
+        }else{
+            return [];
+        }
+    }catch(error){
+        console.error(error)
+    }
+
+    // .then((snapshot) => {
+    //     if(snapshot.exists()){
+    //         return Object.values(snapshot.val());
+    //     }
+    //     return []
+    // })
+}

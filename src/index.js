@@ -24,12 +24,18 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 //관리자 인증(조건에 하나라도 만족하지 못하면 페이지를 이동할 수 없게 하고, 강제로 홈으로 이동시킨다.(경고창 띄우지않음))
 const ProtectRouter = ({checkAdmin, children}) => {//checkAdmin과 children을 체크한다.
-  const { user } = useAuthContext(); //{user}유저에 대한 정보를 받아서 useAuthContex를 불러온다.
+  const { user, isLoading } = useAuthContext(); //{user}유저에 대한 정보를 받아서 useAuthContex를 불러온다.
+
+  if(isLoading){ //isLoading true(초기값)면 실행하지않는다. (정보를 받아오면 false)
+    return
+  }
+
   if(!user || (checkAdmin && !user.isAdmin)){ //user가 아니거나 (체크어드민과 user.isAdmin이 없으면 = 관리자가 아닌 경우) 강제로 홈으로 이동
     return <Navigate to='/' replace/>
   }
   return children
 }
+//ProtectRouter때문에 UploadProduct에서 새로고침하면 홈으로 이동됨. => 사용자 정보 받아올 때 까지 지연시키면 된다. (AuthContext에서)
 
 const routes = createBrowserRouter([
   {
@@ -50,7 +56,7 @@ const routes = createBrowserRouter([
       {
         path : '/product/upload', 
         element :
-        <ProtectRouter checkAdmin>
+        <ProtectRouter checkAdmin> 
           <UploadProduct /> 
         </ProtectRouter>
 

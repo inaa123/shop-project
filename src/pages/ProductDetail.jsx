@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import styled from 'styled-components';
 import UseCart from '../context/UseCart';
+import ProductReview from '../components/ProductReview';
 
 function ProductDetail() {
     //DetaiPageEvent에서 클릭한 요소의 정보를 받아야한다.(Parameter값으로 넘겨줘야 한다.)
@@ -68,6 +69,7 @@ function ProductDetail() {
                 </div>
                 {success && <p>{success}</p>}
             </DetailPage>
+            <ProductReview productId={id}/>
         </div>
     )
 }
