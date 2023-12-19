@@ -1,15 +1,17 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { CategoryContext } from '../context/CategoryContext'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 function MainMenu() {
     const {categoryList} = useContext(CategoryContext);
-    // const [isClick, setIsClick] = useState(false);
-    // const [menuName, setMenuName] = useState('');
+    const [menuName, setMenuName] = useState('');
 
-    const menuList = document.querySelectorAll('#menu-container li');
-    console.log(menuList);
+
+    // const selectMenu = () => {
+    //     setIsClick((prev) => !prev)
+    // }
+
 
     // const onToggleMenu = (e) => {
     // //     setMenuName((prev) => {
@@ -18,11 +20,12 @@ function MainMenu() {
     //     setIsClick((prev) => !prev)
     // }
 
+
     return (
         <NavMenu>
             <ul id='menu-container'>
                 {categoryList.map((el, index) => (
-                    <li key={index} >
+                    <li key={index} value={el} className={(menuName === el)? 'active' : ''} onClick={()=>setMenuName(el)} >
                         <Link to={`/products/${el}`}>{el}</Link>
                     </li>
                 ))}
