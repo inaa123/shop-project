@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { getBoard, onUserState } from '../api/firebase';
 import { useQuery } from '@tanstack/react-query';
 import BoardListItem from '../components/BoardListItem';
+import styled from 'styled-components';
 
 function Qna() {
     const [user, setUser] = useState();
@@ -29,7 +30,7 @@ function Qna() {
     //console.log(user)
 
     return (
-        <div className='container'>
+        <QnaContainer className='container'>
             <div className='board-top'>
                 <h2>QnA 게시판</h2>
                 { user && user.isAdmin && (
@@ -43,8 +44,22 @@ function Qna() {
                     <BoardListItem key={el.id} post={el}/>
                 ))}
             </ul>
-        </div>
+        </QnaContainer>
     )
 }
 
 export default Qna
+
+const QnaContainer = styled.div`
+    .board-top{
+        display: flex;
+        
+    }
+    .boardList{
+        li{
+            display: flex;
+            gap: 10px;
+            border-bottom: solid 1px black;
+        }
+    }
+`
