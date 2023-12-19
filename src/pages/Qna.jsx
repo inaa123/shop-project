@@ -26,11 +26,16 @@ function Qna() {
         queryFn : getBoard
     })
 
+    //console.log(user)
+
     return (
         <div className='container'>
             <div className='board-top'>
                 <h2>QnA 게시판</h2>
-                <button className='writeBtn' onClick={onWriteEvent}>작성하기</button>
+                { user && user.isAdmin && (
+                    <button className='writeBtn' onClick={onWriteEvent}>작성하기</button>
+                )}
+                
             </div>
 
             <ul className='boardList'>
