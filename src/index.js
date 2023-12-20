@@ -11,14 +11,15 @@ import MyCart from './pages/MyCart';
 import ProductDetail from './pages/ProductDetail';
 import UploadProduct from './pages/UploadProduct';
 import CategoryPages from './pages/CategoryPages';
-
-//css
-import './index.css';
 import Search from './pages/Search';
 import WriteBoard from './pages/WriteBoard';
 import Qna from './pages/Qna';
 import DetailBoard from './pages/DetailBoard';
 import NotFound from './pages/NotFound';
+import Login from './pages/Login';
+//css
+import './index.css';
+import Join from './pages/Join';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -45,6 +46,8 @@ const routes = createBrowserRouter([
 
     children : [ //하위요소들
       
+      {path : '/login', element: <Login/>},
+      {path : '/join', element : <Join/> },
       {path : '/cart', element: <MyCart/>},
       {path : '/board/write', element: <WriteBoard/>},
       {path : '/board/qna', element : <Qna/>},

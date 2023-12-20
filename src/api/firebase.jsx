@@ -2,7 +2,7 @@
 //firebase기능 사용할 수 있다.(설치완료 후)
 
 import { initializeApp } from "firebase/app";
-import {GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup, signOut} from "firebase/auth";
+import {GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile} from "firebase/auth";
 import {get, getDatabase, ref, remove, set} from 'firebase/database';
 import { v4 as uuid} from 'uuid';
 
@@ -306,18 +306,38 @@ export async function getReviews(productId){
     }catch(error){
         console.error(error);
     }
-
-    // .then((snapshot) => {
-    //     if(snapshot.exists()){
-    //         return Object.values(snapshot.val());
-    //     }
-    //     return []
-    // })
-    /*
-    const dbRef = ref(database, 'products');
-        const snapshot = await get(dbRef);
-    */
 }
 
-//가격 출력할 곳에서 다 쓸것
-// export function
+//이메일 회원가입 저장
+export async function joinEmail(email, password, name){
+    const auth = getAuth(); //저장할 사용자 인증 폼을 불러온다.
+    try{
+        const userData = await createUserWithEmailAndPassword(auth, email, password); //회원가입하면 자동로그인 됨
+        //createUserWithEmailAndPassword : 사용자 정보 이메일, 패스워드만 저장할 수 있으며 
+        // 추가로 정보를(이름, 전화번호 등) 저장할 때엔 우회하는 방법을 사용해야 한다.
+        
+        const user = userData.user;
+
+        await updateProfile(user, {
+            displayName : name
+        })
+        await signOut(auth); //회원가입 후 자동으로 로그인되는 거 막기
+
+        console.log(user);
+        //return user
+        return {success : true}
+    }catch(error){
+        // console.error(error);
+        return {error : error.code} //에러가 나는 경우 에러 코드를 반환
+    }
+}
+
+//로그인
+export async function loginEmail(email, password){
+    try{
+        const userData = await signInWithEmailAndPassword(auth, email, password)
+        return userData.user
+    }catch(error){
+        console.error(error);
+    }
+}

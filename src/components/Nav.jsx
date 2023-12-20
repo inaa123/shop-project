@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { googleLogOut, googleLogin, onUserState } from '../api/firebase'
 import UserData from './UserData';
@@ -10,9 +10,11 @@ import MainMenu from './MainMenu';
 function Nav() {
     const [user, setUser] = useState(); //유저는 계속 바뀜(user, setUser를 usestate값으로 관리)
     const [menuName, setMenuName] = useState('');
+    const navigate = useNavigate();
 
     const login = () => {
-        googleLogin().then(setUser); //여기서 googleLogin은 api/firebase에 있는 googleLogin, setUser의 값을 새로 담는다.
+        // googleLogin().then(setUser); //여기서 googleLogin은 api/firebase에 있는 googleLogin, setUser의 값을 새로 담는다.
+        navigate('/login')
         
     }
 
@@ -27,7 +29,7 @@ function Nav() {
             setUser(user);
         })
     },[])
-    console.log(user); //isAdmin = true
+    // console.log(user); //isAdmin = true
     //관리자 지정 : 수동으로 만들어 줘야 한다.(데이터베이스 접근해서)
 
     // const selectMenu = (e) => {
