@@ -3,6 +3,7 @@ import { useLocation, useParams } from 'react-router-dom'
 import styled from 'styled-components';
 import UseCart from '../context/UseCart';
 import ProductReview from '../components/ProductReview';
+import { formatCurrency } from '../api/firebase';
 
 function ProductDetail() {
     //DetaiPageEvent에서 클릭한 요소의 정보를 받아야한다.(Parameter값으로 넘겨줘야 한다.)
@@ -47,7 +48,7 @@ function ProductDetail() {
                 </div>
                 <div className='detailText'>
                     <h3>{title}</h3>
-                    <p className='price'>가격 <span>{price}</span></p>
+                    <p className='price'>가격 <span>{formatCurrency(price)}</span></p>
                     <p className='description'>{description}</p>
 
                     <div className='detailOpt'>

@@ -98,11 +98,33 @@ async function adminUser(user){ //user의 값을 받아온다. -> user의 값 �
     }
 } 
 
+//상품 가격변환 함수
+export function formatCurrency(item){ //함수를 실행하는 곳에서 매개변수, item을 받아온다.
+    const number = parseInt(item) //parseFloat도 가능
+    console.log(typeof(number))
+    return number.toLocaleString('ko-KR')
+    //지역에 맞는 단위를 자동으로 구분해서 콤마를 찍어준다.
+    /*
+    ko-KR : 한국
+    en-US : 미국
+    en-CA : 캐나다
+    ja-JP : 일본
+    zh-CN : 중국
+    */
+}
+
 //상품을 database에 업로드
 export async function addProducts(product, image){
     //product와 image 따로 받아야함. img경로 다름
     //각 아이템엔 고유의 식별자값이 들어가야함.(순번으로 들어가면 겹쳐서 오류날 확률이 높음 -> 그래서 yarn add uuid 를 설치한다.) 
     // uuid : 식별자를 만들어주는 라이브러리다. 숫자와 영문으로 조합된 식별자 코드를 부여해서 고유값으로 사용하는 라이브러리다.
+
+    /*
+    데이터베이스에 데이터를 저장할 때에는 원시 형태의 값으로 유지시켜서 저장하고 출력할 때 변환해 주는 과정을 넣어주는 것이 일반적이고, 가장 안전한 방법으로 보고 있다.
+    우선적으로 변환을 해서 저장하게 되면, 지역이 바뀌는 경우 재변환이 필요한 경우가 생긴다.(해외 - 달러 등으로 변환)
+    때문에 원시 형태로 저장 후 필요할 때 마다 필요한 방법으로 변환하는 것이 재사용성과 유연성에 더 알맞다.
+    
+    */
 
     const id = uuid();
 
@@ -272,17 +294,17 @@ export async function addReview(productId, user, text){ //경로 잡을 때 필�
 
 //리뷰 글 불러오기
 export async function getReviews(productId){
-    const reviewRef = get(ref(database, `/review/${productId}`));
+    const reviewRef = ref(database, `/review/${productId}`);
 
     try{
         const snapshot = await get(reviewRef);
         if(snapshot.exists()){
-            return Object.values(snapshot.val());
+            return Object.values(snapshot.val())
         }else{
-            return [];
+            return []
         }
     }catch(error){
-        console.error(error)
+        console.error(error);
     }
 
     // .then((snapshot) => {
@@ -291,4 +313,11 @@ export async function getReviews(productId){
     //     }
     //     return []
     // })
+    /*
+    const dbRef = ref(database, 'products');
+        const snapshot = await get(dbRef);
+    */
 }
+
+//가격 출력할 곳에서 다 쓸것
+// export function
