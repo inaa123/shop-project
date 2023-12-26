@@ -26,6 +26,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "hompage" : "https://cho-shopproject.netlify.app/",
   "eslintConfig": {
     "extends": [
       "react-app",
