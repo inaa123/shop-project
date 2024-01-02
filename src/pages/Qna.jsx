@@ -22,6 +22,7 @@ function Qna() {
         navigate(`/board/write`, {state : {email : user.email}}) //board/write페이지로 이동하고 데이터도 넘겨준다.(state : 식별할 수 있는 걸로(여기선 이메일로!))
 
     }
+    //useQuery는 GET 요청
     const {data : board, isLoading, iseError} = useQuery({
         queryKey : 'board',
         queryFn : getBoard
